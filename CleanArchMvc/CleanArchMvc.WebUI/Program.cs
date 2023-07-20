@@ -36,4 +36,4 @@ namespace CleanArchMvc.WebUI
             app.Run();
         }
     }
-}
+} 
