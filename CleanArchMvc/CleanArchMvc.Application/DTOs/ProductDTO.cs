@@ -36,7 +36,7 @@ namespace CleanArchMvc.Application.DTOs
         [DisplayName("Imagem do Produto")]
         public string Image { get; set; }
 
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
 
         [DisplayName("Categorias")]
         public int CategoryId { get; set; }

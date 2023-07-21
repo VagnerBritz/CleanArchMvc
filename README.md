@@ -11,3 +11,9 @@ de todas as outras camadas do projeto e garantir que as entidades sejam sempre v
 - Validação do modelo;
 - Interfaces para o repositório;
 - Testes unitários para o projeto `Domain`;
+
+### Camada Application:
+ - Utilização de DTOs;
+ - Utilização do padrão CQRS;
+
+
