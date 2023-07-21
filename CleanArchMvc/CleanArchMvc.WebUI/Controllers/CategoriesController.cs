@@ -1,11 +1,12 @@
-﻿using CleanArchMvc.Application.Interfaces;
+﻿using CleanArchMvc.Application.DTOs;
+using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
     public class CategoriesController : Controller
     {
-       private readonly ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
 
         public CategoriesController(ICategoryService categoryService)
         {
@@ -19,5 +20,72 @@ namespace CleanArchMvc.WebUI.Controllers
 
             return View(categories);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryDTO category)
+        {
+            if (ModelState.IsValid)
+            {
+                await _categoryService.AddAsync(category);
+                return RedirectToAction("Index");
+            }
+            return View(category);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null) return NotFound();
+
+            return View(categoryDTO);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(CategoryDTO categoryDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _categoryService.UpdateAsync(categoryDTO);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(categoryDTO);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null) return NotFound();
+            return View(categoryDTO);
+        }
+        [HttpPost(), ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _categoryService.DeleteAsync(id);
+            //return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null) return NotFound();
+            return View(categoryDTO);
+        }
+
     }
 }
