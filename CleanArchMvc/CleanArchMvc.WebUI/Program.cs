@@ -10,7 +10,8 @@ namespace CleanArchMvc.WebUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddInfrastructure(builder.Configuration);
+
+            builder.Services.AddInfrastructure(builder.Configuration); //aqui q chama o Infra.IoC
 
             var app = builder.Build();
 
